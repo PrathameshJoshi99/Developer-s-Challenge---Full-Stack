@@ -1,4 +1,4 @@
-Task 1: Home Page
+*****Task 1: Home Page
 Create a component for the home page (home.component.html):
 
 <mat-toolbar color="primary">
@@ -6,7 +6,7 @@ Create a component for the home page (home.component.html):
   <button mat-button routerLink="/login">Login</button>
 </mat-toolbar>
 
-Task 2: Login Page
+*****Task 2: Login Page
 Create a component for the login page (login.component.html):
 
 <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
   }
 }
 
-Task 3: Search Page
+*****Task 3: Search Page
 Create a component for the search page (search.component.html):
 
 <mat-form-field>
@@ -108,7 +108,7 @@ export class SearchComponent implements OnInit {
   }
 }
 ***The necessary import statements and the basic module configuration for each component.***
-Task 1: Home Page
+*****Task 1: Home Page
 In your home.component.ts:
 
 import { Component } from '@angular/core';
@@ -139,7 +139,7 @@ const routes: Routes = [
 })
 export class AppRoutingModule {}
 
-Task 2: Login Page
+*****Task 2: Login Page
 a. In your login.component.ts:
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -159,7 +159,7 @@ export class LoginComponent {
   ) {}
 }
 
-Task 3: Search Page
+*****Task 3: Search Page
 a. In your search.component.ts:
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
