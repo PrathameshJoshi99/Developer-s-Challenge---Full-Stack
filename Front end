@@ -1,1 +1,221 @@
+Task 1: Home Page
+Create a component for the home page (home.component.html):
+
+<mat-toolbar color="primary">
+  <span>Home</span>
+  <button mat-button routerLink="/login">Login</button>
+</mat-toolbar>
+
+Task 2: Login Page
+Create a component for the login page (login.component.html):
+
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <mat-form-field>
+    <input matInput formControlName="email" placeholder="Email">
+    <mat-error *ngIf="loginForm.get('email').hasError('email')">Invalid email</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="password" placeholder="Password">
+    <mat-error *ngIf="loginForm.get('password').hasError('pattern')">Invalid password</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Login</button>
+</form>
+
+a. In the component's TypeScript file (login.component.ts):
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{8,16}$')]]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  login(): void {
+    if (this.loginForm.valid) {
+      // Perform login logic here
+      this.router.navigate(['/search']);
+    } else {
+      this.snackBar.open('Invalid login credentials', 'Dismiss', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
+    }
+  }
+}
+
+Task 3: Search Page
+Create a component for the search page (search.component.html):
+
+<mat-form-field>
+  <input matInput placeholder="Search TV Shows" [(ngModel)]="searchQuery">
+  <button mat-icon-button (click)="search()">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+
+<div *ngIf="searchResults.length === 0">No results found.</div>
+
+<div *ngFor="let show of searchResults">
+  <!-- Display TV show information here -->
+</div>
+
+a. In the component's TypeScript file (search.component.ts):
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
+})
+export class SearchComponent implements OnInit {
+  searchQuery: string = '';
+  searchResults: any[] = []; // Replace with actual TV show data
+
+  constructor(private snackBar: MatSnackBar) {}
+
+  ngOnInit(): void {}
+
+  search(): void {
+    if (this.searchQuery.trim() !== '') {
+      // Perform search logic here and populate searchResults
+    } else {
+      this.snackBar.open('Please enter a search query', 'Dismiss', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
+    }
+  }
+}
+***The necessary import statements and the basic module configuration for each component.***
+Task 1: Home Page
+In your home.component.ts:
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent {
+  constructor(private router: Router) {}
+}
+
+a. In your app-routing.module.ts (for routing configuration):
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  // Other route configurations
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
+
+Task 2: Login Page
+a. In your login.component.ts:
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+}
+
+Task 3: Search Page
+a. In your search.component.ts:
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
+})
+export class SearchComponent {
+  searchQuery: string = '';
+  searchResults: any[] = []; // Replace with actual TV show data
+
+  constructor(private snackBar: MatSnackBar) {}
+}
+
+b. In your app.module.ts (for module configuration):
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { SearchComponent } from './search/search.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    SearchComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSnackBarModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+
+
 
